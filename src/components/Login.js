@@ -13,7 +13,7 @@ const Login = ()=>{
             <div className="mb-3">
                 <input type="password" className="form-control-lg" id="login-pass" placeholder='Password'/>
             </div>
-            <button type="submit" className="btn btn-primary px-4 py-2">Login to your Account</button>
+            <button type="submit" className="btn btn-purple px-4 py-2">Login to your Account</button>
         </form>
         </div>
 

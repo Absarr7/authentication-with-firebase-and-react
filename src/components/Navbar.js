@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 
 
-const Navbar = ()=>{
+const Navbar = (props)=>{
   return (
         <nav class="navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
@@ -16,8 +16,11 @@ const Navbar = ()=>{
             </li>
           </ul>
         </div>
-        <div className='px-5 d-flex'>
-        <Link className='btn btn-primary btn-sm' to="/login">Already have Account?</Link>
+        <div className='px-2 d-flex'>
+        <Link className='btn btn-purple btn-sm' to="/login">Already have Account?</Link>
+        </div>
+        <div className=' px-2 d-flex mx-2'>
+        <button className='btn btn-purple btn-sm' to="/login">Sign out</button>
         </div>
       </div>
     </nav>

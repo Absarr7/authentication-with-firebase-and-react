@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn-purple {
+  background-color: #6f42c1;
+  color: white;
+  border: #6f42c1;
+  outline: #6f42c1;
+}
+
+.btn-purple:hover {
+  color: white;
+  background-color: #59359a;
+}
