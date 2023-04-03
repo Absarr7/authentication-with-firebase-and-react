@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification} from "firebase/auth"
+import { createUserWithEmailAndPassword, onAuthStateChanged, UserProfile, updateProfile} from "firebase/auth"
 import {auth} from "../config/firebase";
 import { Navigate } from 'react-router-dom';
 
@@ -10,31 +10,20 @@ const Signup = ()=>{
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPass] = useState("");
-    const [user, setUser] = useState("")
-    
+    const [user, setUser] = useState("");
+
     const signin = async(e)=>{
         e.preventDefault();
         try {
             const user = await createUserWithEmailAndPassword(auth, email, password, name).then((userCredential)=>{
-                <Navigate to={"/home"} replace={true}/>
-            });
-            console.log(auth.currentUser);
-            sendEmailVerification(auth.currentUser).then(() => {
-                console.log("email sent");
-                window.location.href = '/verification-pending';
-                
-          });
+                window.location.href = "/verification-pending";
+            })
             
         } catch (error) {
             console.error(error);
         }
     
     };
-    
-    const signout = ()=>{
-        signOut(auth);
-        console.log(auth.currentUser);
-    }
 
     onAuthStateChanged(auth, (currentUser)=>{
         setUser(currentUser);
@@ -60,8 +49,7 @@ const Signup = ()=>{
             </div>
             <button type="submit" className="btn btn-purple px-4 py-2">Create Account</button>
         </form>
-        <p>User logged in:</p>{user?.email}
-            <button className="btn btn-purple px-4 my-4" onClick={signout}>Signout</button>
+            {/* <button className="btn btn-purple px-4 my-4" onClick={signout}>Signout</button> */}
         </div>
     )
 }

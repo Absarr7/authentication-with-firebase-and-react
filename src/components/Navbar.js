@@ -1,27 +1,54 @@
 import {Link} from 'react-router-dom'
+import {auth} from '../config/firebase';
+import {onAuthStateChanged, signOut} from 'firebase/auth';
+import React, {useState} from "react"
+import {Navigate} from "react-router-dom"
 
 
 const Navbar = (props)=>{
+
+  const [Login, setLogin] = useState(false)
+
+  onAuthStateChanged(auth, (currentUser)=>{
+    if (currentUser) {
+      setLogin(true)
+    } else {
+      setLogin(false);
+    }
+  })
+
+  const signout = async()=>{
+    await auth.signOut().then((user)=>{
+      console.log("User Signed Out");
+      console.log(auth.currentUser);
+      window.location.href = "/login"
+    });
+};
   return (
-        <nav class="navbar navbar-expand-lg bg-dark">
-      <div class="container-fluid">
-        <Link class="navbar-brand font-weight-bold text-white" to="/">Absar Ahmad</Link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <nav className="navbar navbar-expand-lg bg-dark">
+      <div className="container-fluid">
+        <Link className="navbar-brand font-weight-bold text-white" to="/">Absar Ahmad</Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <Link class="nav-link active text-white" aria-current="page" to="/">Home</Link>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+          {/* {Login == false &&
+            <li className="nav-item">
+              <Link className="nav-link active text-white" aria-current="page" to="/login">Login</Link>
             </li>
+          } */}
           </ul>
         </div>
-        <div className='px-2 d-flex'>
-        <Link className='btn btn-purple btn-sm' to="/login">Already have Account?</Link>
+        <div className='px-2 d-flex mx-2'>
+        {Login == false &&
+        <Link className='btn btn-purple btn-sm' to="/signup">Don't have an account?</Link>
+        }
+        {Login == true && 
+        <button className='btn btn-purple mx-2 btn-sm' onClick={signout}>Signout</button>
+        }
         </div>
-        <div className=' px-2 d-flex mx-2'>
-        <button className='btn btn-purple btn-sm' to="/login">Sign out</button>
-        </div>
+
       </div>
     </nav>
   )
