@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, UserProfile, updateProfile} from "firebase/auth"
+import { createUserWithEmailAndPassword, onAuthStateChanged} from "firebase/auth"
 import {auth} from "../config/firebase";
-import { Navigate } from 'react-router-dom';
+import {Link} from "react-router-dom"
 
 
 
@@ -15,7 +15,9 @@ const Signup = ()=>{
     const signin = async(e)=>{
         e.preventDefault();
         try {
-            const user = await createUserWithEmailAndPassword(auth, email, password, name).then((userCredential)=>{
+            await createUserWithEmailAndPassword(auth, email, password, name).then((userCredential)=>{
+                userCredential.user.displayName = name;
+                
                 window.location.href = "/verification-pending";
             })
             
@@ -27,6 +29,7 @@ const Signup = ()=>{
 
     onAuthStateChanged(auth, (currentUser)=>{
         setUser(currentUser);
+        console.log(user);
     });
 
     return (
@@ -49,6 +52,7 @@ const Signup = ()=>{
             </div>
             <button type="submit" className="btn btn-purple px-4 py-2">Create Account</button>
         </form>
+            <Link to="/login" className="my-2 fw-light color-blue">Already Have an account?</Link>
             {/* <button className="btn btn-purple px-4 my-4" onClick={signout}>Signout</button> */}
         </div>
     )

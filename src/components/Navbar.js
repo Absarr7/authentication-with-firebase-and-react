@@ -1,12 +1,9 @@
 import {Link} from 'react-router-dom'
 import {auth} from '../config/firebase';
-import {onAuthStateChanged, signOut} from 'firebase/auth';
+import {onAuthStateChanged} from 'firebase/auth';
 import React, {useState} from "react"
-import {Navigate} from "react-router-dom"
 
-
-const Navbar = (props)=>{
-
+const Navbar = ()=>{
   const [Login, setLogin] = useState(false)
 
   onAuthStateChanged(auth, (currentUser)=>{
@@ -33,18 +30,10 @@ const Navbar = (props)=>{
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
-          {/* {Login == false &&
-            <li className="nav-item">
-              <Link className="nav-link active text-white" aria-current="page" to="/login">Login</Link>
-            </li>
-          } */}
           </ul>
         </div>
         <div className='px-2 d-flex mx-2'>
-        {Login == false &&
-        <Link className='btn btn-purple btn-sm' to="/signup">Don't have an account?</Link>
-        }
-        {Login == true && 
+        {Login === true && 
         <button className='btn btn-purple mx-2 btn-sm' onClick={signout}>Signout</button>
         }
         </div>
